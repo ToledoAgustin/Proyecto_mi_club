@@ -25,14 +25,7 @@ class Persona:
         self.__nacionalidad = nacionalidad
 
     def mostrar_datos(self):
-        print(f'Nombre completo: {self.nombre_completo}')
-        print(f'Edad: {self.edad}')
-        print(f'Tipo de ID: {self.__tipo_identificacion}')
-        print(f'Nacionalidad: {self.__nacionalidad}')
-        print(f'Estado legal: {self.es_mayor_de_edad()}')
-        print(f'Validación: {self.validar_identificacion()}')
-        print("-" * 30)
-
+        return f'Nombre completo: {self.nombre_completo}, Edad: {self.edad}, Tipo de ID: {self.__tipo_identificacion}, Nacionalidad: {self.__nacionalidad}, Estado legal: {self.es_mayor_de_edad()}, Validación: {self.validar_identificacion()}'
 
     # --- Métodos de las consignas ---
 
@@ -48,8 +41,3 @@ class Persona:
         else:
             return "Identificacion Válida"
         
-
-persona1 = Persona("Maxi Jackson", 10, "DNI", "uuf9e409", "Peru")
-persona1.mostrar_datos()
-persona2 = Persona("Santi Pérez", 15, "DNI", "", "Uruguay")
-persona2.mostrar_datos()
