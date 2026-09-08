@@ -1,13 +1,15 @@
 from persona import Persona
 
+
 class Socio(Persona):
     def __init__(self, nombre_completo, edad, tipo_identificacion, identificacion, nacionalidad,
-                 fecha_inscripcion, estado, usuario, contrasenia):
+                 fecha_inscripcion, estado, usuario, contrasenia, es_admin=False):
         super().__init__(nombre_completo, edad, tipo_identificacion, identificacion, nacionalidad)
         self.clubes = []
         self.cuotas = []
         self.fecha_inscripcion = fecha_inscripcion
         self.estado = estado  # "Activo" o "Suspendido"
+        self.es_admin = es_admin  # True = socio con rol de administrador
         self.__usuario = usuario
         self.__contrasenia = contrasenia
 
@@ -22,6 +24,9 @@ class Socio(Persona):
 
     def set_contrasenia(self, contrasenia):
         self.__contrasenia = contrasenia
+
+    def es_administrador(self):
+        return self.es_admin
 
     def cambiar_contrasenia(self, contrasenia_actual, contrasenia_nueva):
         if contrasenia_actual == self.__contrasenia:
@@ -48,16 +53,16 @@ class Socio(Persona):
 
     def mostrar_clubes(self):
         if not self.clubes:
-            return f'No pertenece a ningún club.'
-        else:
-            for club in self.clubes:
-                return f' - {club.nombre}'
+            return 'No pertenece a ningún club.'
+        resultado = ""
+        for club in self.clubes:
+            resultado += f' - {club.nombre}'
+        return resultado
 
     def generar_cuota(self, periodo, monto):
         cuota = {"periodo": periodo, "monto": monto, "estado": "Pendiente"}
         self.cuotas.append(cuota)
         return f' Se generó la cuota del período {periodo} por ${monto}.'
-
 
     def pagar_cuota(self, periodo):
         for cuota in self.cuotas:
@@ -69,8 +74,8 @@ class Socio(Persona):
     def cantidad_cuotas_pendientes(self):
         cantidad_pendientes = 0
         for i in self.cuotas:
-            if i ["estado"] == "Pendiente":
-                cantidad_pendientes +=1
+            if i["estado"] == "Pendiente":
+                cantidad_pendientes += 1
         return cantidad_pendientes
 
     def tiene_deudas(self):
@@ -81,10 +86,11 @@ class Socio(Persona):
 
     def mostrar_cuotas(self):
         if not self.cuotas:
-            return f'No tiene cuotas generadas.' 
-        else:
-            for cuota in self.cuotas:
-                return f' Período: {cuota['periodo']} - Monto: ${cuota['monto']} - Estado: {cuota['estado']}'
+            return 'No tiene cuotas generadas.'
+        resultado = ""
+        for cuota in self.cuotas:
+            resultado += f" Período: {cuota['periodo']} - Monto: ${cuota['monto']} - Estado: {cuota['estado']}\n"
+        return resultado
 
     def suspender(self):
         if self.estado == "Activo":
@@ -99,4 +105,6 @@ class Socio(Persona):
         return False
 
     def mostrar_datos(self):
-        return f'{super().mostrar_datos()}, Fecha Inscripción: {self.fecha_inscripcion}, Estado: {self.estado}, Usuario: {self._usuario}'
+        return (f'{super().mostrar_datos()}, Fecha Inscripción: {self.fecha_inscripcion}, '
+                f'Estado: {self.estado}, Usuario: {self.get_usuario()}, '
+                f'Admin: {self.es_admin}')

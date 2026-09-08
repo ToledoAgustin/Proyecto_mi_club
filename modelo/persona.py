@@ -29,15 +29,24 @@ class Persona:
 
     # --- Métodos de las consignas ---
 
+    def validar_edad(self):
+        return self.edad in range(1, 111)
+
     def es_mayor_de_edad(self):
+        validacion = self.validar_edad()
+        if validacion != "Edad válida.":
+            return validacion
         if self.edad >= 18:
             return "Es mayor de edad."
         else:
-            return "Es menor de edad." # que la edad sea entre el rango de 1 a 110 años. y que tire un error al poner negativo
-# hacer otro metodo que me valide que la edad no sea negativa ni pasando los 110 y despues que a ese metodo lo use en el otro metodo de mayor de edad, osea que cada uno tenga su propio metodo
+            return "Es menor de edad." 
+
     def validar_identificacion(self):
-        if self.__identificacion == "":#saber si el dni tiene 7 y 8 digitos y que no me permita poner letras, que sea un valor numerico
-            return "Identificacion Inválida (está vacía)"
-        else:
-            return "Identificacion Válida"
-        
+        identificacion = str(self.__identificacion)
+        if identificacion == "":
+            return "Identificación inválida (está vacía)."
+        if not identificacion.isdigit():
+            return "Identificación inválida (solo se permiten números)."
+        if len(identificacion) not in (7, 8):
+            return "Identificación inválida (debe tener 7 u 8 dígitos)."
+        return "Identificación válida."

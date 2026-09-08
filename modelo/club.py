@@ -6,7 +6,7 @@ class Club:
         self.descripcion = descripcion
         self.ubicacion = ubicacion
         self.__presidente = presidente
-        self.__fecha_fundacion = fecha_fundacion  # se espera el año como número, ej: 1995
+        self.__fecha_fundacion = fecha_fundacion 
 
     def get_presidente(self):
         return self.__presidente
@@ -41,14 +41,6 @@ class Club:
         return False
 
     def mostrar_info(self):
-        return f'Nombre: {self.nombre}, Descripcion: {self.descripcion}, Ubicacion: {self.ubicacion},   Presidente: {self.__presidente}, Fecha de Fundacion: {self.__fecha_fundacion}'
-
-        self.mostrar_antiguedad()
-
-        if self.es_institucion_historica():
-            return True
-        return False
-    
-
-
-
+        return (f'Nombre: {self.nombre}, Descripcion: {self.descripcion}, Ubicacion: {self.ubicacion}, '
+                f'Presidente: {self.__presidente}, Fecha de Fundacion: {self.__fecha_fundacion}, '
+                f'{self.mostrar_antiguedad()}, Institución histórica: {self.es_institucion_historica()}')
